@@ -11,6 +11,10 @@ RUN docker-php-source extract \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pgsql \
     && docker-php-source delete
+# Install through PECL some extensions
+RUN pecl install redis-5.3.7 \
+    && pecl install xdebug-3.2.1 \
+    && docker-php-ext-enable redis xdebug
 
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
